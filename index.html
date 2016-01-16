@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="style.css" />
+		<title>第1回データ分析勉強会-Python環境を整える</title>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	</head>
+
+	<body>
+		<article>
+			<header>
+				<h1>Python環境を整える</h1>
+				<p>第1回のデータ分析勉強会に向けて，まず，iPython notebookを使える環境を整えたいと思います．</p>
+				<p>この資料中には，iPython notebookおよび，numpyなどのパッケージのインストール方法のみが書いてあります．<br>TensorFlowのインストールについては現在準備中です．</p>
+				<p>可能な方は，<a href="https://www.tensorflow.org">TensorFlow</a>のウェブページを参考にインストールしてみてください．</a>
+			</header>
+
+			<section>
+				<h2>もくじ</h2>
+				<ul>
+					<li><a href="#mac">Macの場合</a>
+						<ul>
+							<li><a href="#mac_homebrew">Homebrewのインストール</a></li>
+							<li><a href="#mac_ipython">iPython notebook 他のインストール</a>
+								<ul>
+									<li><a href="#mac_ipython_dousa">動作確認</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li><a href="#win">Windowsの場合</a>
+						<ul>
+							<li><a href="#winpython">WinPythonを使う</a></li>
+							<li><a href="#ubuntu_on_win">仮想マシン上のUbuntuで動かす</a></li>
+						</ul>
+					</li>
+					<li><a href="#ubuntu">Ubuntuの場合</a>
+						<ul>
+							<li><a href="#ubuntu_ipython">iPython notebook 他のインストール</a></li>
+								<ul>
+									<li><a href="#ubuntu_ipython_dousa">動作確認</a></li>
+								</ul>
+						</ul>
+					</li>
+					<li><a href="ipython_notebook_test">iPython notebookのテスト</a>
+				</ol>
+			</section>
+			<hr>
+			<section>
+				<h2 id="mac">Macの場合</h2>
+				<p>基本的に<a href="file:///Applications/Utilities/Terminal.app">ターミナル.app</a>を使います．</p>
+					<h3 id="mac_homebrew">Homebrewのインストール</h3>
+						<p>パッケージ管理のツールをインストールします．MacPortが入ってたら，Homebrewは入れないでください．</p>
+						<p>Xcode.appは入っている前提で話を進めています．インストールされていたなかったら，
+						<a href="https://itunes.apple.com/jp/app/xcode/id497799835?mt=12">Mac App Store</a>
+						からダウンロードしてください</p>
+						<ol type="1">
+							<li>
+								<p>
+								Python関係でいろいろインストールしないといけないので，
+								<a href="http://brew.sh/index_ja.html">Homebrew</a>
+								をインストールします．細かいところは，
+								<a href="http://brew.sh/index_ja.html">Homebrew</a>
+								のWebページを確認しましょう．<br>
+								ターミナルを起動して，以下のコマンドを実行．
+								</p>
+								<pre><code>ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</code></pre>
+							</li>
+							<li>
+								<p>brew doctor</p>
+								<p>ターミナルに以下を打ち込む</p>
+								<pre><code>brew doctor</code></pre>
+								<p>
+									すると，たくさんのWarningが出てきます．確か，Rをインストールしていると，いっぱい出てきた気がします．<br>
+									取り急ぎ，対応が必要なものは，アクセス権に関わるものだけなので，以下のページを参考にしたら，解消できます．
+								</p>
+								<a href="http://qiita.com/webbingstudio@github/items/fc02f8192e83130ddb33">
+									Homebrewをインストールしたときに出るWarningの対処
+								</a>
+							</li>
+						</ol>
+				<h3 id="mac_ipython">iPython notebook 他のインストール</h3>
+					<p>Homebrewがうまく動いたら，今回の勉強会に必要なツールを入れていきましょう．</p>
+					<ol type="1">
+						<li>Python3をインストールする．
+							<p>Macには標準でPythonが入っていますが，今回はPython 3.xベースで行くので，Python3をインストールします．
+							<br>以下をターミナルで実行．
+							</p>
+							<pre><code>brew install python3</code></pre>
+						</li>
+						<li>gccをインストールする．
+							<p>以下をターミナルで実行．</p>
+							<pre><code>brew install gcc</code></pre>
+						</li>
+						<li>pip3をインストールする．
+							<p>以下をターミナルで実行．</p>
+							<pre><code>curl -kL https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python3</code></pre>
+							<p>Python2.x用のpipを入れるならhomebrewでpythonをインストールすればOK
+								<br>そのあとにpython3となっているところをpython2にしたらOK</p>
+							<p>Macでのpipのインストールが厄介っぽいので，
+								<a href="http://qiita.com/who_you_me/items/831d62f396e6d66dda66">ここ</a>
+								を参照．
+							</p>
+						</li>
+						<li>jupyterをインストールする．
+							<p>以下をターミナルにて実行．</p>
+							<pre><code>pip3 install jupyter</code></pre>
+						</li>
+						<li>numpyをインストールする．
+							<p>以下をターミナルにて実行．</p>
+							<pre><code>pip3 install numpy</code></pre>
+						</li>
+						<li>scipyをインストールする．
+							<p>以下をターミナルにて実行．</p>
+							<pre><code>pip3 install scipy</code></pre>
+						</li>
+						<li>matplotlibをインストールする．
+							<p>以下をターミナルにて実行．</p>
+							<pre><code>pip3 install matplotlib</code></pre>
+						</li>
+						<li>おわり．
+						</li>
+					</ol>
+					<h4 id="mac_ipython_dousa">動作確認</h4>
+						<p>以下をターミナルにて実行．</p>
+						<pre><code>ipython notebook</code></pre>
+						<p>iPython notebookがブラウザで起動されたら，オッケー！</p>
+			</section>
+
+			<section>
+				<h2 id="win">Windowsの場合</h2>
+					<h3 id="winpython">WinPythonを使う</h3>
+						<p>WinPythonを入れたら一発でiPython notebookを使う環境が整いますが，
+						今回の勉強会で使うTensorFlowがWindowsには対応していないので，勉強会ではおそらく使いません．<br>
+						ただ，numpy, scipy, pandasなどの便利なライブラリが最初から入っていて，Windows上で使うのには，
+						とても便利です．
+						</p>
+						<ol type="1">
+							<li>WinPythonのダウンロード
+								<p>すでにPythonをインストールしてあっても，してなくても大丈夫．<br>
+								純粋なPythonをインストールしたものとは独立したものになっています．</p>
+								<p>以下のページから，WinPython3.xをダウンロード．<br>
+								だいたい1GBくらいのストレージ空容量が必要です．</p>
+								<a href="http://winpython.sourceforge.net">WinPython</a>
+							</li>
+							<li>展開
+								<p>WInPython-64bit-3.x.x.x.exeを開く(x.x.xは適宜読み替えをしてください．)</p>
+								<img src="img/win/winp01.png" alt="winp01" />
+								<p>任意のディレクトリに展開したらいいと思います．</p>
+								<img src="img/win/winp03.png" alt="winp03" />
+							</li>
+							<li>起動
+								<p>展開できたら，展開先のディレクトリの中のWinPython Command Prompt.exeを起動してください．</p>
+								<img src="img/win/winp06.png" alt="winp06" />
+								<p>そうすると，黒い画面になるので，以下のように入力してください．</p>
+								<pre><code>ipython notebook</code></pre>
+								<img src="img/win/winp08.png" alt="winp08" />
+								<p>ブラウザが起動して，以下のような画面が出たらOK!</p>
+								<img src="img/win/winp09.png" alt="winp09" />
+							</li>
+						</ol>
+					<h3 id="ubuntu_on_win">仮想マシン上でUbuntuを動かす</h3>
+						<p>先述の通り，Tensor FlowはWindows上では動かないので，
+						<a href="https://www.ubuntulinux.jp">Ubuntu</a>
+						というOSをWindows上で動かした上で，その
+						<a href="https://www.ubuntulinux.jp">Ubuntu</a>
+						なるOSの上でPythonを使います．
+						</p>
+						<p>Unixライクな操作になれることで，画期的なデータ前処理ツール<a href="http://www.nysol.jp">NYSOL</a>を使う時の
+						ハードルは下がるのではないかなと思います．
+						</p>
+						<ol type="1">
+							<li>VirtualBoxのダウンロード
+								<p>仮想のPCを動かすためのソフトウェア
+								<a href="https://www.virtualbox.org">Oracle Virtual Box</a>
+								をダウンロードします．</p>
+								<img src="img/vb/vb01.png" alt="vb01" />
+								<p>ダウンロードしたファイルを開くと，セットアップウィザードが立ち上がるので，そのまま実行してインストールします．</p>
+								<img src="img/vb/vb02.png" alt="vb02" />
+								<p>インストールが終わったら一回，開くだけ開いてみましょう．</p>
+								<img src="img/vb/vb03.png" alt="vb03" />
+								<p>次のような画面になれば，VirtualBoxのインストールは完了です！</p>
+								<img src="img/vb/vb04.png" alt="vb04" />
+							</li>
+							<li>Ubuntuのダウンロード
+								<p>先ほど，Virtualboxをダウンロードして，箱はできたので，
+								次は，その中に入れるためのOSをダウンロードしてきます．</p>
+								<img src="img/vbu/vbu01.png" alt="vbu01" />
+								<p><a href="https://www.ubuntulinux.jp/download">Ubuntuのサイトからダウンロード</a>します．
+								仮想のハードディスクイメージをダウンロードしたいので，
+								<a href="https://www.ubuntulinux.jp/download/ja-remix-vhd">ここ</a>
+								から「Ubuntu 14.04 LTS」を選択しましょう．
+								</p>
+								<img src="img/vbu/vbu02.png" alt="vbu02" />
+								<p>ダウンロードできたら，展開します．
+								展開してできたフォルダはマイドキュメントにでも置いておくと良いでしょう．
+								（仮想イメージなので，起動するたび使います．
+								間違って消してしまうと起動しなくなってしまうので，
+								わかりやすい場所に！）
+								</p>
+							</li>
+							<li>Ubuntuのインストール
+								<p>ここで役者は揃いました．やっとインストールできます．</p>
+								<img src="img/vbu/vbu04.png" alt="vbu04" />
+								<p>Virtual Boxを開いて，左上の「新規」ボタンをクリックします．</p>
+								<img src="img/vbu/vbu05.png" alt="vbu05" />
+								<p>「仮想マシンを作成」画面になるので，「名前」欄に"Ubuntu"と入力します．
+								すると，下二つのタイプ・バージョンは自動で設定してくれます．
+								賢い！</p>
+								<img src="img/vbu/vbu06.png" alt="vbu06" />
+								<p>次に，仮想PCに割くメモリサイズを指定します．
+								できるだけ大きいほうがいいですが，PCに搭載されているメモリに依るので，
+								半分弱くらいってところでしょうか．<br>
+								僕は1GBにしました．少し足りなかったかなって感じがします．（後で変更可能です．）</p>
+								<img src="img/vbu/vbu07.png" alt="vbu07" />
+								<p>「ハードディスク」について聞かれます．ここで，さっきダウンロードしたUbuntuが効いてくるわけです．</p>
+								<img src="img/vbu/vbu08.png" alt="vbu08" />
+								<p>ここで，先ほど移動したvhdファイルを選んであげましょう．</p>
+								<img src="img/vbu/vbu09.png" alt="vbu09" />
+								<p>こうなればOKです．</p>
+								<img src="img/vbu/vbu10.png" alt="vbu10" />
+								<p>これで，「作成ボタン」を押すと，Ubuntuのインストールされた仮想PCが出来上がります．</p>
+							</li>
+							<li>Ubuntuのセットアップ
+								<p>ここから，仮想PCを使える状態にしていきます．</p>
+								<img src="img/vbu/vbu11.png" alt="vbu11" />
+								<p>起動ボタンを押して起動します．</p>
+								<img src="img/vbu/vbu12.png" alt="vbu12" />
+								<p>少し待つと言語選択の画面になります．</p>
+								<p>続けて，時間帯・キーボードと設定していきます．</p>
+								<img src="img/vbu/vbu13.png" alt="vbu13" />
+								<img src="img/vbu/vbu14.png" alt="vbu14" />
+								<br>
+								<p>つづいて，ユーザーを作成します．</p>
+								<img src="img/vbu/vbu15.png" alt="vbu15" />
+								<p>「あなたの名前」・「ユーザー名」・「パスワード」を決めてください．コンピュータの名前は自動的に決めてくれます．</p>
+								<img src="img/vbu/vbu16.png" alt="vbu16" />
+								<p>初期設定を続けます．</p>
+								<p>初期設定が終わると，次のようなログイン画面になります．<br>
+								先ほど決めたパスワードを入力してログインします．</p>
+								<img src="img/vbu/vbu17.png" alt="vbu17" />
+								<p>ログインできたら，次のような画面になるかと思います．</p>
+								<br>
+								<p>これで，Ubuntuのセットアップまで終わりました．</p>
+							</li>
+							<li>Guest Addition CD イメージの挿入
+								<p>一応，ここまででいい感じに終わったと思いますが，
+								あとあとの事を考えて，仮想Ubuntuの中にVirtualBoxのドライバをインストールします．</p>
+								<img src="img/vbu/ubu98.png" alt="ubu98" />
+								<img src="img/vbu/ubu98.png" alt="ubu99" />
+								<p>以上のような作業を行ってください．</p>
+						</ol>
+					<h4>UbuntuでPythonを動かす</h4>
+					<p>いよいよPythonが動きます．iPython notebookなどのインストールについては，以下を参照してください． </p>
+					<p><a href="#ubuntu">Ubuntuの場合</a></p>
+
+			</section>
+			
+			<section>
+				<h2 id="ubuntu">Linux(Ubuntu)の場合</h2>
+					<p>まず，いろいろインストールするために使う「端末」を起動します．
+					Windowsでいうコマンドプロンプトみたいなやつです．</p>
+					<p>一番左上のボタンをクリックして，入力欄に「Terminal」もしくは「端末」と入力します．</p>
+					<img src="img/ubu/ubu01.png" alt="ubu01" />
+					<p>すると，ウインクしているみたいなアイコンが出てくるので，それをクリックします，</p>
+					<img src="img/ubu/ubu02.png" alt="ubu02" />
+					<p>こんな画面になると思います．</p>
+					<p>今から，この画面に
+					<pre><code>#command</code></pre>
+					こんな風に書いてあるコマンドを入力していきます．
+					</p>
+					<br>
+
+					<p>Python3は入ってたと思うので，とりあえず，iPython notebookが動くようにすることが目標</p>
+
+					<h3 id="ubuntu_ipython">iPython notebook 他のインストール</h3>
+					<p>以下，インストールする必要のあるパッケージ</p>
+					<ol type="1">
+						<!--
+						<li>（Python3が入ってなかったら）Python3をインストールする
+							<p>以下を端末にて実行，パスワードとか聞かれるので，適宜入力．</p>
+							<pre><code>sudo apt-get install python3</code></pre>
+							-->
+						<li>pip3をインストールする．
+							<p>以下を端末にて実行，パスワードとか聞かれるので，適宜入力．</p>
+							<pre><code>sudo apt-get install python3-pip</code></pre>
+						<li>gfortranをインストールする．
+							<p>以下を端末にて実行，パスワードとか聞かれるので，適宜入力．</p>
+							<pre><code>sudo apt-get install gfortran</code></pre>
+						<li>libblas-dev liblapack-devをインストールする．
+							<p>以下を端末にて実行，パスワードとか聞かれるので，適宜入力．</p>
+							<pre><code>sudo apt-get install libblas-dev liblapack-dev</code></pre>
+							<p>これの実行でScipyのインストールがうまくいった</p>
+						<li>libpng-dev libjpeg8-dev libfreetype6-devをインストールする．
+							<p>以下を端末にて実行，パスワードとか聞かれるので，適宜入力．</p>
+							<pre><code>sudo apt-get install libpng-dev libjpeg8-dev libfreetype6-dev</code></pre>
+							<p>これで，matplotlibのインストールがうまくいった</p>
+						<li>jupyterをインストールする．
+							<p>以下を端末にて実行．</p>
+							<pre><code>sudo pip3 install jupyter</code></pre>
+						<li>numpyをインストールする．
+							<p>以下を端末にて実行．</p>
+							<pre><code>sudo pip3 install numpy</code></pre>
+						<li>pandasをインストールする．
+							<p>以下を端末にて実行．</p>
+							<pre><code>sudo pip3 install pandas</code></pre>
+						<li>scipyをインストールする．
+							<p>以下を端末にて実行．</p>
+							<pre><code>sudo pip3 install scipy</code></pre>
+						<li>matplotlibをインストールする．
+							<p>以下を端末にて実行．</p>
+							<pre><code>sudo pip3 install matplotlib</code></pre>
+							<p>インストールに際してなんかうまくいかなかったから，
+							<a href="http://ng3rdstmadgke.hatenablog.com/entry/2015/10/14/144330">ここを参考</a>．
+							</p>
+						<li>おわり
+					</ol>
+					<h3 id="ubuntu_ipython_dousa">動作確認</h3>
+						<p>以下を端末にて実行．</p>
+						<pre><code>ipython notebook</code></pre>
+						<p>iPython notebookがブラウザで起動されたら，オッケー！</p>
+					
+			</section>
+
+
+			<section>
+				<h2 id="ipython_notebook_test">iPython notebookのテスト</h2>
+					<p>ipython notebookのインストールが終わったら，Pythonゼミに耐えうるかどうか，テストします．</p>
+					<ol type="1">
+						<li>ノートの作成
+							<p>iPython Notebookが起動したら，ノートを作成します．</p>
+							<img src="img/make_notebook.png" alt="make_notebook" />
+							<p>Newメニューをクリックして，Python 3を選択．
+							すると，選択されているディレクトリにUntitled.ipynbが作成されます．</p>
+
+						<li>図を描く
+							<p>以下を実行して，図が表示されたら成功です！</p>
+							<iframe src="Untitled.html"></iframe>
+					</ol>
+			<footer>
+				<hr />
+				Copyright (C) 2015 Masaaki Okabe All Rights Reserved.
+			</footer>
+		</article>
+	</body>
+</html>
